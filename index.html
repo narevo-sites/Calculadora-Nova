@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#7c3aed">
+
+<title>Calculadora Nova</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --bg:#07070a;
+    --panel:#121216;
+    --panel2:#1b1b21;
+    --purple:#7c3aed;
+    --purple2:#914cff;
+    --purple3:#5b21b6;
+    --white:#ffffff;
+    --gray:#9b9ba3;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #29104d 0%,
+            #11091b 30%,
+            #07070a 70%
+        );
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+/* =========================
+   LOGO NOVA
+========================= */
+
+.nova-logo{
+    width:120px;
+    height:120px;
+    margin:0 auto 22px;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+
+    border-radius:28px;
+    overflow:hidden;
+
+    box-shadow:
+        0 0 35px rgba(124,58,237,.35),
+        0 15px 35px rgba(0,0,0,.45);
+}
+
+.logo-part{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+
+    font-size:54px;
+    font-weight:300;
+
+    line-height:1;
+}
+
+.logo-black{
+    background:#19191b;
+}
+
+.logo-purple{
+    background:linear-gradient(
+        135deg,
+        #7c3aed,
+        #914cff
+    );
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#login{
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.login-box{
+    width:100%;
+    max-width:390px;
+
+    padding:35px 25px;
+
+    text-align:center;
+
+    background:rgba(18,18,22,.96);
+
+    border:1px solid #30243e;
+
+    border-radius:30px;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.55),
+        0 0 30px rgba(124,58,237,.12);
+}
+
+.login-title{
+    font-size:31px;
+    font-weight:900;
+
+    margin-bottom:8px;
+}
+
+.login-subtitle{
+    color:var(--gray);
+
+    margin-bottom:25px;
+}
+
+.password{
+    width:100%;
+    height:58px;
+
+    background:#202026;
+
+    border:1px solid #34343c;
+
+    border-radius:17px;
+
+    outline:none;
+
+    color:white;
+
+    text-align:center;
+
+    font-size:24px;
+
+    letter-spacing:8px;
+}
+
+.password:focus{
+    border-color:var(--purple2);
+
+    box-shadow:
+        0 0 20px rgba(124,58,237,.2);
+}
+
+.enter{
+    width:100%;
+    height:58px;
+
+    margin-top:15px;
+
+    border:0;
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #914cff
+        );
+
+    color:white;
+
+    font-size:17px;
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.enter:active{
+    transform:scale(.97);
+}
+
+.error{
+    min-height:20px;
+
+    margin-top:13px;
+
+    color:#ff6969;
+
+    font-size:14px;
+}
+
+/* =========================
+   APP
+========================= */
+
+.hidden{
+    display:none !important;
+}
+
+#app{
+    width:100%;
+    max-width:520px;
+
+    min-height:100vh;
+
+    margin:auto;
+
+    padding:16px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:15px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.mini-logo{
+    width:45px;
+    height:45px;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+
+    overflow:hidden;
+
+    border-radius:12px;
+}
+
+.mini-logo .logo-part{
+    font-size:20px;
+}
+
+.brand-name{
+    font-size:20px;
+    font-weight:900;
+}
+
+.menu-button{
+    width:48px;
+    height:48px;
+
+    border:1px solid #303038;
+
+    background:#18181d;
+
+    color:white;
+
+    border-radius:15px;
+
+    font-size:27px;
+
+    cursor:pointer;
+}
+
+/* =========================
+   CALCULADORA
+========================= */
+
+.calculator{
+    background:rgba(18,18,22,.96);
+
+    border:1px solid #292930;
+
+    border-radius:28px;
+
+    padding:17px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45);
+}
+
+.display{
+    min-height:145px;
+
+    padding:20px;
+
+    margin-bottom:15px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+
+    background:
+        linear-gradient(
+            145deg,
+            #19131f,
+            #0e0e11
+        );
+
+    border-radius:22px;
+
+    border:1px solid #29202f;
+
+    overflow:hidden;
+}
+
+.previous{
+    min-height:24px;
+
+    text-align:right;
+
+    color:#777;
+
+    font-size:16px;
+
+    word-break:break-all;
+}
+
+.current{
+    text-align:right;
+
+    font-size:42px;
+
+    font-weight:800;
+
+    line-height:1.15;
+
+    word-break:break-all;
+}
+
+.buttons{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:10px;
+}
+
+.btn{
+    height:67px;
+
+    border:1px solid #2e2e35;
+
+    border-radius:18px;
+
+    background:#202025;
+
+    color:white;
+
+    font-size:21px;
+
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+.btn:active{
+    transform:scale(.94);
+
+    background:#303038;
+}
+
+.operator{
+    background:#351961;
+
+    color:#dec7ff;
+}
+
+.equal{
+    grid-column:span 4;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #914cff
+        );
+}
+
+.clear{
+    color:#ff7777;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.overlay{
+    position:fixed;
+
+    inset:0;
+
+    z-index:10;
+
+    background:rgba(0,0,0,.7);
+}
+
+.menu{
+    position:absolute;
+
+    top:0;
+    right:0;
+
+    width:min(350px,90%);
+
+    height:100%;
+
+    padding:22px;
+
+    background:#111115;
+
+    border-left:1px solid #303038;
+
+    overflow-y:auto;
+}
+
+.menu-header{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:22px;
+}
+
+.menu-header h2{
+    font-size:25px;
+}
+
+.close{
+    width:42px;
+    height:42px;
+
+    border:0;
+
+    border-radius:13px;
+
+    background:#202025;
+
+    color:white;
+
+    font-size:24px;
+}
+
+.menu-item{
+    width:100%;
+
+    padding:17px;
+
+    margin-bottom:10px;
+
+    text-align:left;
+
+    border:1px solid #2b2b31;
+
+    border-radius:15px;
+
+    background:#1a1a1f;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:700;
+}
+
+.menu-item:active{
+    background:#321553;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    position:fixed;
+
+    inset:0;
+
+    z-index:20;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.75);
+}
+
+.modal-box{
+    width:100%;
+    max-width:430px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    padding:24px;
+
+    background:#151519;
+
+    border:1px solid #37303f;
+
+    border-radius:25px;
+}
+
+.modal-title{
+    font-size:25px;
+
+    font-weight:900;
+
+    margin-bottom:18px;
+}
+
+.input{
+    width:100%;
+
+    height:52px;
+
+    margin-bottom:11px;
+
+    padding:0 15px;
+
+    border:1px solid #33333a;
+
+    border-radius:14px;
+
+    background:#202025;
+
+    color:white;
+
+    outline:none;
+
+    font-size:17px;
+}
+
+.modal-button{
+    width:100%;
+
+    height:52px;
+
+    margin-top:6px;
+
+    border:0;
+
+    border-radius:14px;
+
+    background:#7c3aed;
+
+    color:white;
+
+    font-weight:900;
+}
+
+.close-modal{
+    width:100%;
+
+    height:48px;
+
+    margin-top:10px;
+
+    border:1px solid #33333a;
+
+    border-radius:14px;
+
+    background:#202025;
+
+    color:white;
+}
+
+.result{
+    margin-top:14px;
+
+    padding:16px;
+
+    border-radius:14px;
+
+    background:#21142f;
+
+    border:1px solid #45206f;
+}
+
+/* =========================
+   HISTORIAL
+========================= */
+
+.history{
+    padding:13px;
+
+    margin-bottom:9px;
+
+    border-radius:14px;
+
+    background:#1d1d22;
+
+    border:1px solid #2b2b31;
+}
+
+.history-operation{
+    color:#999;
+
+    font-size:14px;
+}
+
+.history-result{
+    margin-top:4px;
+
+    font-size:19px;
+
+    font-weight:800;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    text-align:center;
+
+    color:#666;
+
+    font-size:12px;
+
+    margin-top:17px;
+
+    padding-bottom:15px;
+}
+
+/* =========================
+   CELULARES PEQUEÑOS
+========================= */
+
+@media(max-width:380px){
+
+    #app{
+        padding:10px;
+    }
+
+    .btn{
+        height:59px;
+    }
+
+    .current{
+        font-size:34px;
+    }
+
+    .nova-logo{
+        width:105px;
+        height:105px;
+    }
+
+    .logo-part{
+        font-size:47px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     PANTALLA DE ACCESO
+========================= -->
+
+<section id="login">
+
+    <div class="login-box">
+
+        <!-- LOGO HECHO SOLAMENTE CON HTML + CSS -->
+
+        <div class="nova-logo">
+
+            <div class="logo-part logo-black">
+                +
+            </div>
+
+            <div class="logo-part logo-purple">
+                −
+            </div>
+
+            <div class="logo-part logo-purple">
+                ×
+            </div>
+
+            <div class="logo-part logo-black">
+                =
+            </div>
+
+        </div>
+
+        <div class="login-title">
+            Calculadora Nova
+        </div>
+
+        <div class="login-subtitle">
+            Calculadora matemática
+        </div>
+
+        <input
+            id="password"
+            class="password"
+            type="password"
+            inputmode="numeric"
+            maxlength="4"
+            placeholder="••••"
+        >
+
+        <button
+            class="enter"
+            onclick="entrar()"
+        >
+            ENTRAR
+        </button>
+
+        <div id="error" class="error"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     APLICACIÓN
+========================= -->
+
+<main id="app" class="hidden">
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="mini-logo">
+
+                <div class="logo-part logo-black">+</div>
+                <div class="logo-part logo-purple">−</div>
+                <div class="logo-part logo-purple">×</div>
+                <div class="logo-part logo-black">=</div>
+
+            </div>
+
+            <div class="brand-name">
+                Calculadora Nova
+            </div>
+
+        </div>
+
+        <button
+            class="menu-button"
+            onclick="abrirMenu()"
+        >
+            ☰
+        </button>
+
+    </header>
+
+
+    <section class="calculator">
+
+        <div class="display">
+
+            <div
+                id="previous"
+                class="previous"
+            ></div>
+
+            <div
+                id="current"
+                class="current"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <button class="btn clear" onclick="limpiar()">C</button>
+            <button class="btn" onclick="borrar()">⌫</button>
+            <button class="btn" onclick="agregar('(')">(</button>
+            <button class="btn" onclick="agregar(')')">)</button>
+
+            <button class="btn" onclick="agregar('7')">7</button>
+            <button class="btn" onclick="agregar('8')">8</button>
+            <button class="btn" onclick="agregar('9')">9</button>
+            <button class="btn operator" onclick="agregar('÷')">÷</button>
+
+            <button class="btn" onclick="agregar('4')">4</button>
+            <button class="btn" onclick="agregar('5')">5</button>
+            <button class="btn" onclick="agregar('6')">6</button>
+            <button class="btn operator" onclick="agregar('×')">×</button>
+
+            <button class="btn" onclick="agregar('1')">1</button>
+            <button class="btn" onclick="agregar('2')">2</button>
+            <button class="btn" onclick="agregar('3')">3</button>
+            <button class="btn operator" onclick="agregar('-')">−</button>
+
+            <button class="btn" onclick="agregar('0')">0</button>
+            <button class="btn" onclick="agregar('.')">.</button>
+            <button class="btn" onclick="porcentaje()">%</button>
+            <button class="btn operator" onclick="agregar('+')">+</button>
+
+            <button
+                class="btn equal"
+                onclick="calcular()"
+            >
+                =
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+        Calculadora Nova
+    </div>
+
+</main>
+
+
+<!-- =========================
+     MENU
+========================= -->
+
+<div
+    id="overlay"
+    class="overlay hidden"
+    onclick="cerrarMenu(event)"
+>
+
+    <aside
+        class="menu"
+        onclick="event.stopPropagation()"
+    >
+
+        <div class="menu-header">
+
+            <h2>Menú</h2>
+
+            <button
+                class="close"
+                onclick="cerrarMenu()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <button
+            class="menu-item"
+            onclick="operaciones()"
+        >
+            Operaciones
+        </button>
+
+        <button
+            class="menu-item"
+            onclick="porcentajesMenu()"
+        >
+            Porcentajes
+        </button>
+
+        <button
+            class="menu-item"
+            onclick="potencias()"
+        >
+            Potencias
+        </button>
+
+        <button
+            class="menu-item"
+            onclick="raices()"
+        >
+            Raíces cuadradas
+        </button>
+
+        <button
+            class="menu-item"
+            onclick="ecuaciones()"
+        >
+            Ecuaciones
+        </button>
+
+        <button
+            class="menu-item"
+            onclick="geometria()"
+        >
+            Geometría
+        </button>
+
+        <button
+            class="menu-item"
+            onclick="historialMenu()"
+        >
+            Historial
+        </button>
+
+        <button
+            class="menu-item"
+            onclick="limpiarTodo()"
+        >
+            Limpiar calculadora
+        </button>
+
+    </aside>
+
+</div>
+
+
+<!-- =========================
+     MODAL
+========================= -->
+
+<div
+    id="modal"
+    class="modal hidden"
+>
+
+    <div class="modal-box">
+
+        <div
+            id="modalTitle"
+            class="modal-title"
+        ></div>
+
+        <div id="modalContent"></div>
+
+        <button
+            class="close-modal"
+            onclick="cerrarModal()"
+        >
+            Cerrar
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   CONTRASEÑA
+========================= */
+
+const CONTRASENA = "4231";
+
+function entrar(){
+
+    const password =
+        document.getElementById("password").value;
+
+    const error =
+        document.getElementById("error");
+
+    if(password === CONTRASENA){
+
+        document
+            .getElementById("login")
+            .classList.add("hidden");
+
+        document
+            .getElementById("app")
+            .classList.remove("hidden");
+
+        error.textContent = "";
+
+    }else{
+
+        error.textContent =
+            "Contraseña incorrecta.";
+
+    }
+}
+
+document
+    .getElementById("password")
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(event.key === "Enter"){
+                entrar();
+            }
+
+        }
+    );
+
+
+/* =========================
+   CALCULADORA
+========================= */
+
+let expresion = "";
+
+let resultadoMostrado = false;
+
+const current =
+    document.getElementById("current");
+
+const previous =
+    document.getElementById("previous");
+
+
+function actualizar(){
+
+    current.textContent =
+        expresion || "0";
+
+}
+
+
+function agregar(valor){
+
+    if(resultadoMostrado){
+
+        if(/[0-9.(]/.test(valor)){
+            expresion = "";
+        }
+
+        resultadoMostrado = false;
+    }
+
+    expresion += valor;
+
+    actualizar();
+
+}
+
+
+function limpiar(){
+
+    expresion = "";
+
+    previous.textContent = "";
+
+    resultadoMostrado = false;
+
+    actualizar();
+
+}
+
+
+function borrar(){
+
+    expresion =
+        expresion.slice(0,-1);
+
+    actualizar();
+
+}
+
+
+function porcentaje(){
+
+    if(!expresion) return;
+
+    expresion += "%";
+
+    actualizar();
+
+}
+
+
+function convertirFormula(texto){
+
+    return texto
+        .replace(/×/g,"*")
+        .replace(/÷/g,"/")
+        .replace(/−/g,"-")
+        .replace(
+            /(\d+(?:\.\d+)?)%/g,
+            "($1/100)"
+        );
+
+}
+
+
+function calcular(){
+
+    if(!expresion) return;
+
+    try{
+
+        const original = expresion;
+
+        const formula =
+            convertirFormula(expresion);
+
+        if(
+            !/^[0-9+\-*/().\s]+$/.test(formula)
+        ){
+            throw new Error();
+        }
+
+        const resultado =
+            Function(
+                '"use strict";return (' +
+                formula +
+                ')'
+            )();
+
+        if(!Number.isFinite(resultado)){
+            throw new Error();
+        }
+
+        previous.textContent =
+            original + " =";
+
+        expresion =
+            String(
+                Number(
+                    resultado.toFixed(10)
+                )
+            );
+
+        actualizar();
+
+        resultadoMostrado = true;
+
+        guardarHistorial(
+            original,
+            expresion
+        );
+
+    }catch{
+
+        current.textContent = "Error";
+
+        resultadoMostrado = true;
+
+    }
+
+}
+
+
+/* =========================
+   TECLADO
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            document.activeElement.tagName === "INPUT"
+        ){
+            return;
+        }
+
+        const key = event.key;
+
+        if(/[0-9]/.test(key)){
+            agregar(key);
+        }
+
+        else if(key === "+"){
+            agregar("+");
+        }
+
+        else if(key === "-"){
+            agregar("-");
+        }
+
+        else if(key === "*"){
+            agregar("×");
+        }
+
+        else if(key === "/"){
+            agregar("÷");
+        }
+
+        else if(key === "."){
+            agregar(".");
+        }
+
+        else if(key === "%"){
+            porcentaje();
+        }
+
+        else if(key === "(" || key === ")"){
+            agregar(key);
+        }
+
+        else if(
+            key === "Enter" ||
+            key === "="
+        ){
+            calcular();
+        }
+
+        else if(key === "Backspace"){
+            borrar();
+        }
+
+        else if(key === "Escape"){
+            limpiar();
+        }
+
+    }
+);
+
+
+/* =========================
+   MENU
+========================= */
+
+function abrirMenu(){
+
+    document
+        .getElementById("overlay")
+        .classList.remove("hidden");
+
+}
+
+
+function cerrarMenu(event){
+
+    if(
+        event &&
+        event.target.id !== "overlay"
+    ){
+        return;
+    }
+
+    document
+        .getElementById("overlay")
+        .classList.add("hidden");
+
+}
+
+
+/* =========================
+   MODALES
+========================= */
+
+function mostrarModal(titulo,contenido){
+
+    document
+        .getElementById("modalTitle")
+        .textContent = titulo;
+
+    document
+        .getElementById("modalContent")
+        .innerHTML = contenido;
+
+    document
+        .getElementById("modal")
+        .classList.remove("hidden");
+
+}
+
+
+function cerrarModal(){
+
+    document
+        .getElementById("modal")
+        .classList.add("hidden");
+
+}
+
+
+/* =========================
+   OPCIONES DEL MENU
+========================= */
+
+function operaciones(){
+
+    cerrarMenu();
+
+    mostrarModal(
+        "Operaciones",
+        `
+        <p>
+        Utilizá la calculadora principal
+        para realizar operaciones matemáticas.
+        </p>
+        `
+    );
+
+}
+
+
+function porcentajesMenu(){
+
+    cerrarMenu();
+
+    mostrarModal(
+        "Porcentajes",
+        `
+        <input
+            id="numeroPor"
+            class="input"
+            type="number"
+            placeholder="Número"
+        >
+
+        <input
+            id="valorPor"
+            class="input"
+            type="number"
+            placeholder="Porcentaje"
+        >
+
+        <button
+            class="modal-button"
+            onclick="calcularPorcentaje()"
+        >
+            CALCULAR
+        </button>
+
+        <div
+            id="resultadoPor"
+            class="result"
+        ></div>
+        `
+    );
+
+}
+
+
+function calcularPorcentaje(){
+
+    const numero =
+        Number(
+            document.getElementById("numeroPor").value
+        );
+
+    const porcentaje =
+        Number(
+            document.getElementById("valorPor").value
+        );
+
+    const resultado =
+        numero * porcentaje / 100;
+
+    document
+        .getElementById("resultadoPor")
+        .textContent =
+        "Resultado: " + resultado;
+
+}
+
+
+function potencias(){
+
+    cerrarMenu();
+
+    mostrarModal(
+        "Potencias",
+        `
+        <input
+            id="base"
+            class="input"
+            type="number"
+            placeholder="Base"
+        >
+
+        <input
+            id="exp"
+            class="input"
+            type="number"
+            placeholder="Exponente"
+        >
+
+        <button
+            class="modal-button"
+            onclick="calcularPotencia()"
+        >
+            CALCULAR
+        </button>
+
+        <div
+            id="resultadoPot"
+            class="result"
+        ></div>
+        `
+    );
+
+}
+
+
+function calcularPotencia(){
+
+    const base =
+        Number(
+            document.getElementById("base").value
+        );
+
+    const exp =
+        Number(
+            document.getElementById("exp").value
+        );
+
+    document
+        .getElementById("resultadoPot")
+        .textContent =
+        "Resultado: " +
+        Math.pow(base,exp);
+
+}
+
+
+function raices(){
+
+    cerrarMenu();
+
+    mostrarModal(
+        "Raíz cuadrada",
+        `
+        <input
+            id="numeroRaiz"
+            class="input"
+            type="number"
+            min="0"
+            placeholder="Número"
+        >
+
+        <button
+            class="modal-button"
+            onclick="calcularRaiz()"
+        >
+            CALCULAR
+        </button>
+
+        <div
+            id="resultadoRaiz"
+            class="result"
+        ></div>
+        `
+    );
+
+}
+
+
+function calcularRaiz(){
+
+    const numero =
+        Number(
+            document.getElementById("numeroRaiz").value
+        );
+
+    if(numero < 0){
+
+        document
+            .getElementById("resultadoRaiz")
+            .textContent =
+            "No existe una raíz real.";
+
+        return;
+    }
+
+    document
+        .getElementById("resultadoRaiz")
+        .textContent =
+        "Resultado: " +
+        Math.sqrt(numero);
+
+}
+
+
+function ecuaciones(){
+
+    cerrarMenu();
+
+    mostrarModal(
+        "Ecuaciones",
+        `
+        <p style="color:#999;margin-bottom:15px">
+        Resolvé ax + b = c
+        </p>
+
+        <input
+            id="a"
+            class="input"
+            type="number"
+            placeholder="a"
+        >
+
+        <input
+            id="b"
+            class="input"
+            type="number"
+            placeholder="b"
+        >
+
+        <input
+            id="c"
+            class="input"
+            type="number"
+            placeholder="c"
+        >
+
+        <button
+            class="modal-button"
+            onclick="resolverEcuacion()"
+        >
+            RESOLVER
+        </button>
+
+        <div
+            id="resultadoEcuacion"
+            class="result"
+        ></div>
+        `
+    );
+
+}
+
+
+function resolverEcuacion(){
+
+    const a =
+        Number(document.getElementById("a").value);
+
+    const b =
+        Number(document.getElementById("b").value);
+
+    const c =
+        Number(document.getElementById("c").value);
+
+    if(a === 0){
+
+        document
+            .getElementById("resultadoEcuacion")
+            .textContent =
+            "a no puede ser 0.";
+
+        return;
+    }
+
+    const x =
+        (c-b)/a;
+
+    document
+        .getElementById("resultadoEcuacion")
+        .textContent =
+        "x = " + x;
+
+}
+
+
+function geometria(){
+
+    cerrarMenu();
+
+    mostrarModal(
+        "Geometría",
+        `
+        <p style="color:#999;margin-bottom:15px">
+        Área de un rectángulo
+        </p>
+
+        <input
+            id="geoBase"
+            class="input"
+            type="number"
+            placeholder="Base"
+        >
+
+        <input
+            id="geoAltura"
+            class="input"
+            type="number"
+            placeholder="Altura"
+        >
+
+        <button
+            class="modal-button"
+            onclick="calcularArea()"
+        >
+            CALCULAR
+        </button>
+
+        <div
+            id="resultadoGeo"
+            class="result"
+        ></div>
+        `
+    );
+
+}
+
+
+function calcularArea(){
+
+    const base =
+        Number(
+            document.getElementById("geoBase").value
+        );
+
+    const altura =
+        Number(
+            document.getElementById("geoAltura").value
+        );
+
+    document
+        .getElementById("resultadoGeo")
+        .textContent =
+        "Área = " + base * altura;
+
+}
+
+
+/* =========================
+   HISTORIAL
+========================= */
+
+let historial =
+    JSON.parse(
+        localStorage.getItem("novaHistorial") || "[]"
+    );
+
+
+function guardarHistorial(
+    operacion,
+    resultado
+){
+
+    historial.unshift({
+        operacion:operacion,
+        resultado:resultado
+    });
+
+    historial =
+        historial.slice(0,50);
+
+    localStorage.setItem(
+        "novaHistorial",
+        JSON.stringify(historial)
+    );
+
+}
+
+
+function historialMenu(){
+
+    cerrarMenu();
+
+    if(historial.length === 0){
+
+        mostrarModal(
+            "Historial",
+            "<p style='color:#999'>No hay operaciones todavía.</p>"
+        );
+
+        return;
+    }
+
+    let contenido = "";
+
+    historial.forEach(item => {
+
+        contenido += `
+        <div class="history">
+
+            <div class="history-operation">
+                ${item.operacion}
+            </div>
+
+            <div class="history-result">
+                = ${item.resultado}
+            </div>
+
+        </div>
+        `;
+
+    });
+
+    contenido += `
+        <button
+            class="modal-button"
+            onclick="borrarHistorial()"
+        >
+            BORRAR HISTORIAL
+        </button>
+    `;
+
+    mostrarModal(
+        "Historial",
+        contenido
+    );
+
+}
+
+
+function borrarHistorial(){
+
+    historial = [];
+
+    localStorage.removeItem(
+        "novaHistorial"
+    );
+
+    cerrarModal();
+
+}
+
+
+/* =========================
+   LIMPIAR TODO
+========================= */
+
+function limpiarTodo(){
+
+    cerrarMenu();
+
+    limpiar();
+
+    historial = [];
+
+    localStorage.removeItem(
+        "novaHistorial"
+    );
+
+}
+
+
+/* =========================
+   SERVICE WORKER
+========================= */
+
+if("serviceWorker" in navigator){
+
+    window.addEventListener(
+        "load",
+        function(){
+
+            navigator.serviceWorker
+                .register("./sw.js")
+                .catch(
+                    error =>
+                    console.log(error)
+                );
+
+        }
+    );
+
+}
+
+</script>
+
+</body>
+</html>
