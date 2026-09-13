@@ -1,0 +1,14 @@
+name: Prueba APK
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  prueba:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Probar
+        run: echo "GitHub Actions funciona"
