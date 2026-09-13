@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Calculadora Nova</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 10% 10%,#7c3aed,transparent 25%),
+        radial-gradient(circle at 90% 90%,#a855f7,transparent 25%),
+        #050505;
+    color:white;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+#login{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-box{
+    width:100%;
+    max-width:420px;
+    padding:32px 25px;
+    text-align:center;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:32px;
+    box-shadow:0 25px 80px rgba(0,0,0,.7);
+}
+
+/* =========================
+   LOGO HTML + CSS
+========================= */
+
+.logo-css{
+    width:150px;
+    height:150px;
+
+    margin:0 auto 25px;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+
+    overflow:hidden;
+
+    border-radius:38px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.7),
+        0 0 30px rgba(124,58,237,.3);
+}
+
+.logo-cuadro{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+
+    font-size:60px;
+    font-weight:300;
+
+    line-height:1;
+}
+
+.logo-negro{
+    background:#181818;
+}
+
+.logo-morado{
+    background:linear-gradient(
+        135deg,
+        #6d28d9,
+        #8b3df5
+    );
+}
+
+.logo-cuadro span{
+    text-shadow:
+        0 4px 10px rgba(0,0,0,.3);
+}
+
+.logo-cuadro .igual{
+    font-size:54px;
+}
+
+/* LOGIN */
+
+.login-box h1{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.login-box p{
+    color:#999;
+    margin-bottom:25px;
+}
+
+.password{
+    width:100%;
+    height:56px;
+
+    border:2px solid #30223e;
+    border-radius:16px;
+
+    background:#080808;
+    color:white;
+
+    outline:none;
+
+    text-align:center;
+
+    font-size:24px;
+    letter-spacing:7px;
+}
+
+.password:focus{
+    border-color:#8b5cf6;
+}
+
+.login-button{
+    width:100%;
+    height:56px;
+
+    margin-top:15px;
+
+    border:0;
+    border-radius:16px;
+
+    background:linear-gradient(
+        135deg,
+        #6d28d9,
+        #9333ea
+    );
+
+    color:white;
+
+    font-size:17px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.login-button:active{
+    transform:scale(.97);
+}
+
+.error{
+    height:20px;
+    margin-top:10px;
+    color:#ff4f81;
+}
+
+
+/* =========================
+   APLICACIÓN
+========================= */
+
+#app{
+    display:none;
+
+    width:100%;
+    max-width:520px;
+    min-height:100vh;
+
+    margin:auto;
+
+    background:#080808;
+}
+
+
+/* HEADER */
+
+.header{
+    height:75px;
+
+    padding:0 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:#0d0d0d;
+
+    border-bottom:1px solid #242424;
+}
+
+.title{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.menu-button{
+    width:48px;
+    height:48px;
+
+    border:0;
+    border-radius:15px;
+
+    background:#251735;
+
+    color:#a855f7;
+
+    font-size:27px;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   CALCULADORA
+========================= */
+
+.calculator{
+    padding:18px;
+}
+
+.display{
+    min-height:150px;
+
+    padding:20px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+
+    text-align:right;
+
+    background:#151515;
+
+    border:1px solid #292929;
+
+    border-radius:28px;
+
+    overflow:hidden;
+}
+
+.previous{
+    min-height:25px;
+
+    color:#888;
+
+    font-size:17px;
+
+    word-break:break-all;
+}
+
+.current{
+    margin-top:5px;
+
+    color:white;
+
+    font-size:44px;
+
+    font-weight:bold;
+
+    word-break:break-all;
+}
+
+
+/* BOTONES */
+
+.buttons{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:10px;
+
+    margin-top:15px;
+}
+
+.btn{
+    min-height:76px;
+
+    border:0;
+
+    border-radius:21px;
+
+    background:#191919;
+
+    color:white;
+
+    font-size:27px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.12s;
+}
+
+.btn:active{
+    transform:scale(.91);
+}
+
+
+/* MORADO */
+
+.operator,
+.equals{
+    background:linear-gradient(
+        145deg,
+        #6d28d9,
+        #8b3df5
+    );
+}
+
+.function{
+    background:#29202f;
+    color:#b678ff;
+}
+
+.zero{
+    grid-column:span 2;
+}
+
+
+/* =========================
+   MENÚ
+========================= */
+
+.menu{
+    position:fixed;
+
+    top:0;
+    right:-100%;
+
+    width:min(400px,94%);
+
+    height:100vh;
+
+    z-index:20;
+
+    background:#111;
+
+    transition:.3s;
+
+    box-shadow:-20px 0 60px rgba(0,0,0,.8);
+
+    overflow-y:auto;
+}
+
+.menu.open{
+    right:0;
+}
+
+.menu-header{
+    height:75px;
+
+    padding:0 18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    border-bottom:1px solid #292929;
+}
+
+.menu-header h2{
+    font-size:23px;
+}
+
+.close{
+    width:45px;
+    height:45px;
+
+    border:0;
+    border-radius:14px;
+
+    background:#29202f;
+
+    color:#b678ff;
+
+    font-size:27px;
+
+    cursor:pointer;
+}
+
+.menu-content{
+    padding:18px;
+}
+
+.section-title{
+    color:#888;
+
+    font-size:13px;
+
+    margin:10px 0;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+}
+
+.menu-item{
+    width:100%;
+
+    padding:17px;
+
+    margin-bottom:9px;
+
+    border:0;
+    border-radius:18px;
+
+    background:#191919;
+
+    color:white;
+
+    text-align:left;
+
+    cursor:pointer;
+}
+
+.menu-item:active{
+    transform:scale(.98);
+}
+
+.menu-item strong{
+    display:block;
+
+    margin-bottom:5px;
+
+    font-size:16px;
+}
+
+.menu-item span{
+    color:#888;
+
+    font-size:13px;
+}
+
+
+/* =========================
+   MODALES
+========================= */
+
+.overlay{
+    position:fixed;
+
+    inset:0;
+
+    z-index:50;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.82);
+
+    backdrop-filter:blur(5px);
+}
+
+.overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:430px;
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    padding:25px;
+
+    background:#151515;
+
+    border:1px solid #352443;
+
+    border-radius:27px;
+}
+
+.modal h2{
+    margin-bottom:9px;
+}
+
+.description{
+    color:#999;
+
+    line-height:1.4;
+
+    margin-bottom:20px;
+}
+
+.problem{
+    padding:22px;
+
+    background:#090909;
+
+    border-radius:20px;
+
+    text-align:center;
+}
+
+.problem-text{
+    font-size:30px;
+
+    font-weight:bold;
+
+    margin-bottom:18px;
+}
+
+.answer{
+    width:100%;
+
+    height:55px;
+
+    border:2px solid #30223e;
+
+    border-radius:15px;
+
+    background:#151515;
+
+    color:white;
+
+    outline:none;
+
+    text-align:center;
+
+    font-size:20px;
+}
+
+.answer:focus{
+    border-color:#8b5cf6;
+}
+
+.action{
+    width:100%;
+
+    height:55px;
+
+    margin-top:12px;
+
+    border:0;
+
+    border-radius:15px;
+
+    background:#7c3aed;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.secondary{
+    background:#292929;
+}
+
+.result{
+    min-height:25px;
+
+    margin-top:12px;
+
+    text-align:center;
+
+    font-weight:bold;
+}
+
+
+/* HISTORIAL */
+
+.history-item{
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:14px;
+
+    margin-bottom:8px;
+
+    border-radius:14px;
+
+    background:#202020;
+}
+
+.empty{
+    padding:30px;
+
+    color:#777;
+
+    text-align:center;
+}
+
+
+/* =========================
+   PC
+========================= */
+
+@media(min-width:600px){
+
+    #app{
+        min-height:900px;
+
+        margin-top:20px;
+
+        border-radius:30px;
+
+        overflow:hidden;
+
+        box-shadow:0 25px 100px rgba(0,0,0,.8);
+    }
+
+}
+
+
+/* CELULAR */
+
+@media(max-width:380px){
+
+    .logo-css{
+        width:130px;
+        height:130px;
+    }
+
+    .btn{
+        min-height:67px;
+        font-size:23px;
+    }
+
+    .current{
+        font-size:36px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     PANTALLA DE ACCESO
+========================= -->
+
+<section id="login">
+
+<div class="login-box">
+
+
+<!-- LOGO HECHO CON HTML + CSS -->
+
+<div class="logo-css">
+
+    <div class="logo-cuadro logo-negro">
+        <span>+</span>
+    </div>
+
+    <div class="logo-cuadro logo-morado">
+        <span>−</span>
+    </div>
+
+    <div class="logo-cuadro logo-morado">
+        <span>×</span>
+    </div>
+
+    <div class="logo-cuadro logo-negro">
+        <span class="igual">=</span>
+    </div>
+
+</div>
+
+
+<h1>
+Calculadora Nova
+</h1>
+
+<p>
+Calculadora matemática avanzada
+</p>
+
+
+<input
+    id="password"
+    class="password"
+    type="password"
+    inputmode="numeric"
+    maxlength="4"
+    placeholder="••••"
+>
+
+
+<button
+    class="login-button"
+    onclick="entrar()">
+
+    ENTRAR
+
+</button>
+
+
+<div
+    id="error"
+    class="error">
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     APLICACIÓN
+========================= -->
+
+<main id="app">
+
+
+<header class="header">
+
+    <div class="title">
+        Calculadora Nova
+    </div>
+
+    <button
+        class="menu-button"
+        onclick="abrirMenu()">
+
+        ☰
+
+    </button>
+
+</header>
+
+
+
+<section class="calculator">
+
+
+<div class="display">
+
+    <div
+        id="previous"
+        class="previous">
+    </div>
+
+    <div
+        id="current"
+        class="current">
+
+        0
+
+    </div>
+
+</div>
+
+
+
+<div class="buttons">
+
+
+<button
+class="btn function"
+onclick="clearAll()">
+C
+</button>
+
+
+<button
+class="btn function"
+onclick="add('(')">
+(
+</button>
+
+
+<button
+class="btn function"
+onclick="add(')')">
+)
+</button>
+
+
+<button
+class="btn operator"
+onclick="add('/')">
+÷
+</button>
+
+
+
+<button
+class="btn"
+onclick="add('7')">
+7
+</button>
+
+
+<button
+class="btn"
+onclick="add('8')">
+8
+</button>
+
+
+<button
+class="btn"
+onclick="add('9')">
+9
+</button>
+
+
+<button
+class="btn operator"
+onclick="add('*')">
+×
+</button>
+
+
+
+<button
+class="btn"
+onclick="add('4')">
+4
+</button>
+
+
+<button
+class="btn"
+onclick="add('5')">
+5
+</button>
+
+
+<button
+class="btn"
+onclick="add('6')">
+6
+</button>
+
+
+<button
+class="btn operator"
+onclick="add('-')">
+−
+</button>
+
+
+
+<button
+class="btn"
+onclick="add('1')">
+1
+</button>
+
+
+<button
+class="btn"
+onclick="add('2')">
+2
+</button>
+
+
+<button
+class="btn"
+onclick="add('3')">
+3
+</button>
+
+
+<button
+class="btn operator"
+onclick="add('+')">
++
+</button>
+
+
+
+<button
+class="btn zero"
+onclick="add('0')">
+0
+</button>
+
+
+<button
+class="btn function"
+onclick="percent()">
+%
+</button>
+
+
+<button
+class="btn equals"
+onclick="calculate()">
+=
+</button>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     MENÚ
+========================= -->
+
+<aside id="menu" class="menu">
+
+
+<div class="menu-header">
+
+<h2>
+Herramientas
+</h2>
+
+<button
+class="close"
+onclick="cerrarMenu()">
+
+×
+
+</button>
+
+</div>
+
+
+<div class="menu-content">
+
+
+<div class="section-title">
+Problemas matemáticos
+</div>
+
+
+<button
+class="menu-item"
+onclick="problem('operaciones')">
+
+<strong>
+Operaciones
+</strong>
+
+<span>
+Sumas, restas, multiplicaciones y divisiones.
+</span>
+
+</button>
+
+
+
+<button
+class="menu-item"
+onclick="problem('porcentajes')">
+
+<strong>
+Porcentajes
+</strong>
+
+<span>
+Calculá porcentajes.
+</span>
+
+</button>
+
+
+
+<button
+class="menu-item"
+onclick="problem('potencias')">
+
+<strong>
+Potencias
+</strong>
+
+<span>
+Practicá potencias.
+</span>
+
+</button>
+
+
+
+<button
+class="menu-item"
+onclick="problem('raices')">
+
+<strong>
+Raíces cuadradas
+</strong>
+
+<span>
+Resolvé raíces exactas.
+</span>
+
+</button>
+
+
+
+<button
+class="menu-item"
+onclick="problem('ecuaciones')">
+
+<strong>
+Ecuaciones
+</strong>
+
+<span>
+Encontrá el valor de X.
+</span>
+
+</button>
+
+
+
+<button
+class="menu-item"
+onclick="problem('geometria')">
+
+<strong>
+Geometría
+</strong>
+
+<span>
+Calculá áreas y perímetros.
+</span>
+
+</button>
+
+
+
+<div class="section-title">
+Herramientas
+</div>
+
+
+<button
+class="menu-item"
+onclick="openHistory()">
+
+<strong>
+Historial
+</strong>
+
+<span>
+Mirá tus operaciones anteriores.
+</span>
+
+</button>
+
+
+<button
+class="menu-item"
+onclick="clearAll();cerrarMenu()">
+
+<strong>
+Limpiar calculadora
+</strong>
+
+<span>
+Borrar la operación actual.
+</span>
+
+</button>
+
+
+</div>
+
+</aside>
+
+</main>
+
+
+
+<!-- =========================
+     PROBLEMAS
+========================= -->
+
+<div
+id="problemOverlay"
+class="overlay">
+
+<div class="modal">
+
+<h2 id="problemTitle">
+Problema
+</h2>
+
+<p
+id="problemDescription"
+class="description">
+</p>
+
+
+<div class="problem">
+
+<div
+id="problemText"
+class="problem-text">
+</div>
+
+
+<input
+id="answer"
+class="answer"
+type="number"
+inputmode="decimal"
+placeholder="Respuesta"
+>
+
+</div>
+
+
+<button
+class="action"
+onclick="checkProblem()">
+
+COMPROBAR
+
+</button>
+
+
+<div
+id="problemResult"
+class="result">
+</div>
+
+
+<button
+class="action secondary"
+onclick="closeProblem()">
+
+CERRAR
+
+</button>
+
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     HISTORIAL
+========================= -->
+
+<div
+id="historyOverlay"
+class="overlay">
+
+<div class="modal">
+
+<h2>
+Historial
+</h2>
+
+<p class="description">
+Tus operaciones anteriores.
+</p>
+
+<div id="historyList"></div>
+
+
+<button
+class="action secondary"
+onclick="closeHistory()">
+
+CERRAR
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* =========================
+   CONTRASEÑA
+========================= */
+
+const PASSWORD = "4231";
+
+
+function entrar(){
+
+    const pass =
+        document.getElementById("password").value;
+
+    const error =
+        document.getElementById("error");
+
+
+    if(pass === PASSWORD){
+
+        document.getElementById("login").style.display =
+            "none";
+
+        document.getElementById("app").style.display =
+            "block";
+
+        error.textContent = "";
+
+    }else{
+
+        error.textContent =
+            "Contraseña incorrecta.";
+
+        document.getElementById("password").value =
+            "";
+
+    }
+
+}
+
+
+document
+.getElementById("password")
+.addEventListener("keydown",function(e){
+
+    if(e.key === "Enter"){
+        entrar();
+    }
+
+});
+
+
+/* =========================
+   CALCULADORA
+========================= */
+
+let current = "";
+let previous = "";
+let history = [];
+
+
+function update(){
+
+    document.getElementById("current").textContent =
+        current || "0";
+
+    document.getElementById("previous").textContent =
+        previous;
+
+}
+
+
+function add(value){
+
+    current += value;
+
+    update();
+
+}
+
+
+function clearAll(){
+
+    current = "";
+    previous = "";
+
+    update();
+
+}
+
+
+function calculate(){
+
+    if(!current) return;
+
+
+    try{
+
+        const expression = current;
+
+        let result = Function(
+            '"use strict";return (' +
+            expression +
+            ')'
+        )();
+
+
+        if(!isFinite(result)){
+            throw new Error();
+        }
+
+
+        result =
+            Math.round(result * 100000000) /
+            100000000;
+
+
+        history.unshift({
+
+            operation:expression,
+            result:result
+
+        });
+
+
+        if(history.length > 30){
+            history.pop();
+        }
+
+
+        previous =
+            expression + " =";
+
+        current =
+            String(result);
+
+        update();
+
+
+    }catch{
+
+        previous =
+            "Operación inválida";
+
+        current = "";
+
+        update();
+
+    }
+
+}
+
+
+function percent(){
+
+    if(!current) return;
+
+
+    try{
+
+        let result = Function(
+            '"use strict";return (' +
+            current +
+            ')'
+        )();
+
+
+        result =
+            result / 100;
+
+
+        previous =
+            current + "%";
+
+        current =
+            String(result);
+
+        update();
+
+
+    }catch{
+
+        previous = "Error";
+
+        update();
+
+    }
+
+}
+
+
+/* =========================
+   TECLADO
+========================= */
+
+document.addEventListener(
+"keydown",
+function(e){
+
+    if(
+        document.getElementById("app")
+        .style.display !== "block"
+    ){
+        return;
+    }
+
+
+    if(
+        (e.key >= "0" && e.key <= "9") ||
+        "+-*/.()".includes(e.key)
+    ){
+
+        add(e.key);
+
+    }
+
+
+    if(e.key === "Enter"){
+        calculate();
+    }
+
+
+    if(e.key === "Escape"){
+        clearAll();
+    }
+
+
+    if(e.key === "Backspace"){
+
+        current =
+            current.slice(0,-1);
+
+        update();
+
+    }
+
+});
+
+
+/* =========================
+   MENÚ
+========================= */
+
+function abrirMenu(){
+
+    document
+    .getElementById("menu")
+    .classList.add("open");
+
+}
+
+
+function cerrarMenu(){
+
+    document
+    .getElementById("menu")
+    .classList.remove("open");
+
+}
+
+
+/* =========================
+   PROBLEMAS
+========================= */
+
+let correctAnswer = 0;
+
+
+function random(min,max){
+
+    return Math.floor(
+        Math.random() *
+        (max-min+1)
+    ) + min;
+
+}
+
+
+function problem(type){
+
+    cerrarMenu();
+
+
+    const title =
+        document.getElementById("problemTitle");
+
+    const description =
+        document.getElementById("problemDescription");
+
+    const text =
+        document.getElementById("problemText");
+
+    const answer =
+        document.getElementById("answer");
+
+    const result =
+        document.getElementById("problemResult");
+
+
+    answer.value = "";
+
+    result.textContent = "";
+
+
+    if(type === "operaciones"){
+
+        title.textContent =
+            "Operaciones";
+
+        description.textContent =
+            "Resolvé la operación.";
+
+        const a = random(10,999);
+
+        const b = random(10,999);
+
+        correctAnswer = a+b;
+
+        text.textContent =
+            a + " + " + b;
+
+    }
+
+
+    if(type === "porcentajes"){
+
+        title.textContent =
+            "Porcentajes";
+
+        description.textContent =
+            "Calculá el porcentaje.";
+
+        const number =
+            random(2,50)*10;
+
+        const percentage =
+            [10,20,25,50][random(0,3)];
+
+        correctAnswer =
+            number*percentage/100;
+
+        text.textContent =
+            percentage +
+            "% de " +
+            number;
+
+    }
+
+
+    if(type === "potencias"){
+
+        title.textContent =
+            "Potencias";
+
+        description.textContent =
+            "Resolvé la potencia.";
+
+        const base =
+            random(2,10);
+
+        const exponent =
+            random(2,4);
+
+        correctAnswer =
+            Math.pow(base,exponent);
+
+        text.textContent =
+            base +
+            " ^ " +
+            exponent;
+
+    }
+
+
+    if(type === "raices"){
+
+        title.textContent =
+            "Raíces cuadradas";
+
+        description.textContent =
+            "Resolvé la raíz cuadrada.";
+
+        const number =
+            random(1,12);
+
+        correctAnswer =
+            number;
+
+        text.textContent =
+            "√" +
+            (number*number);
+
+    }
+
+
+    if(type === "ecuaciones"){
+
+        title.textContent =
+            "Ecuaciones";
+
+        description.textContent =
+            "Encontrá el valor de X.";
+
+        const x =
+            random(2,15);
+
+        const a =
+            random(2,9);
+
+        const b =
+            random(1,20);
+
+        const total =
+            a*x+b;
+
+        correctAnswer =
+            x;
+
+        text.textContent =
+            a +
+            "x + " +
+            b +
+            " = " +
+            total;
+
+    }
+
+
+    if(type === "geometria"){
+
+        title.textContent =
+            "Geometría";
+
+        description.textContent =
+            "Calculá el área del rectángulo.";
+
+        const base =
+            random(3,20);
+
+        const height =
+            random(3,20);
+
+        correctAnswer =
+            base*height;
+
+        text.textContent =
+            base +
+            " × " +
+            height;
+
+    }
+
+
+    document
+    .getElementById("problemOverlay")
+    .classList.add("show");
+
+}
+
+
+/* =========================
+   COMPROBAR
+========================= */
+
+function checkProblem(){
+
+    const value =
+        Number(
+            document.getElementById("answer").value
+        );
+
+    const result =
+        document.getElementById("problemResult");
+
+
+    if(value === correctAnswer){
+
+        result.textContent =
+            "Correcto.";
+
+        result.style.color =
+            "#4ade80";
+
+    }else{
+
+        result.textContent =
+            "Incorrecto. La respuesta es " +
+            correctAnswer + ".";
+
+        result.style.color =
+            "#ff4f81";
+
+    }
+
+}
+
+
+/* =========================
+   CERRAR PROBLEMA
+========================= */
+
+function closeProblem(){
+
+    document
+    .getElementById("problemOverlay")
+    .classList.remove("show");
+
+}
+
+
+/* =========================
+   HISTORIAL
+========================= */
+
+function openHistory(){
+
+    cerrarMenu();
+
+
+    const list =
+        document.getElementById("historyList");
+
+
+    if(history.length === 0){
+
+        list.innerHTML =
+            '<div class="empty">No hay operaciones todavía.</div>';
+
+    }else{
+
+        list.innerHTML =
+            history.map(item => `
+
+                <div class="history-item">
+
+                    <span>
+                        ${item.operation}
+                    </span>
+
+                    <strong>
+                        ${item.result}
+                    </strong>
+
+                </div>
+
+            `).join("");
+
+    }
+
+
+    document
+    .getElementById("historyOverlay")
+    .classList.add("show");
+
+}
+
+
+function closeHistory(){
+
+    document
+    .getElementById("historyOverlay")
+    .classList.remove("show");
+
+}
+
+</script>
+
+</body>
+  </html>
