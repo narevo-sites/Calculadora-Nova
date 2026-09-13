@@ -1,0 +1,10 @@
+{
+  "name": "Calculadora Nova",
+  "short_name": "Nova",
+  "description": "Calculadora matemática",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait"
+}
